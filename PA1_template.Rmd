@@ -7,6 +7,11 @@ output:
     keep_md: true
 ---
 
+```{r global_options, include=TRUE}
+knitr::opts_chunk$set( fig.path='Figures/',
+                      echo=TRUE, warning=FALSE, message=FALSE)
+```
+
 ```{r}
 setwd("C:/Users/Office/Documents/Coursera/Reproducible Research/Assignment 1")
 library(dplyr)
@@ -23,7 +28,7 @@ activity <- read.csv("activity.csv")
 ## What is mean total number of steps taken per day?
 The total number of steps by day:
 
-```{r}
+```{r total_no_steps_by_day}
 totalStepsByDay <- activity %>% group_by(date) %>% summarise(steps=sum(steps))
 hist(totalStepsByDay$steps,main="Total Number of Steps by Day",xlab="Steps")
 meanSteps <- summarise(totalStepsByDay, steps=mean(steps,na.rm=TRUE))
@@ -35,7 +40,7 @@ The median of the total number of steps by day is `r medianSteps`.
 
 
 ## What is the average daily activity pattern?
-```{r}
+```{r average_daily_steps}
 activity1 <- activity
 # Set any NA values to zero
 activity1[is.na(activity1)] <- 0
@@ -50,7 +55,7 @@ The interval which contains the largest number of steps (`r maxSteps`) is interv
 
 
 ## Imputing missing values
-```{r}
+```{r total_no_steps_by_day2}
 activity2 <- activity
 countNA <- sum(is.na(activity2$steps))
 activity2[is.na(activity2$steps),"steps"] <- averageDailySteps[match(activity2[is.na(activity2$steps),"interval"],
@@ -78,7 +83,7 @@ and this has the effect of decreasing the average.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r}
+```{r weekday_vs_weekend}
 activity2$day <- weekdays(as.POSIXlt(activity2$date,"%Y-%m-%d",tz="GMT"))
 activity2$dayClassification[activity2$day %in% c("Monday","Tuesday",
   "Wednesday","Thursday","Friday")] <- "weekday"

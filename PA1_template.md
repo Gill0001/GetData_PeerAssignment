@@ -4,41 +4,16 @@ Thursday, March 12, 2015
 
 
 ```r
+knitr::opts_chunk$set( fig.path='Figures/',
+                      echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+
+```r
 setwd("C:/Users/Office/Documents/Coursera/Reproducible Research/Assignment 1")
 library(dplyr)
-```
-
-```
-## Warning: package 'dplyr' was built under R version 3.1.2
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-## 
-## The following object is masked from 'package:stats':
-## 
-##     filter
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
 library(reshape2)
-```
-
-```
-## Warning: package 'reshape2' was built under R version 3.1.2
-```
-
-```r
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.1.2
 ```
 
 ## Loading and preprocessing the data
@@ -57,7 +32,7 @@ totalStepsByDay <- activity %>% group_by(date) %>% summarise(steps=sum(steps))
 hist(totalStepsByDay$steps,main="Total Number of Steps by Day",xlab="Steps")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+![](Figures/total_no_steps_by_day-1.png) 
 
 ```r
 meanSteps <- summarise(totalStepsByDay, steps=mean(steps,na.rm=TRUE))
@@ -78,7 +53,7 @@ averageDailySteps <- activity1 %>% group_by(interval) %>% summarise(steps=mean(s
 plot(averageDailySteps,type="l",main="Average number of steps by 5 minute time interval")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+![](Figures/average_daily_steps-1.png) 
 
 ```r
 intMaxSteps <- averageDailySteps[ which.max(averageDailySteps$steps),1]
@@ -100,7 +75,7 @@ totalStepsByDay2 <- activity2 %>% group_by(date) %>% summarise(steps=sum(steps))
 hist(totalStepsByDay2$steps,main="Total Number of Steps by Day (filling missing values)",xlab="Steps")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+![](Figures/total_no_steps_by_day2-1.png) 
 
 ```r
 meanSteps2 <- summarise(totalStepsByDay2, steps=mean(steps,na.rm=TRUE))
@@ -138,7 +113,7 @@ qplot(interval, steps, data=averageDailySteps2,ylab="Number of steps",
       facet_wrap(~dayClassification, ncol = 1, nrow = 2)
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+![](Figures/weekday_vs_weekend-1.png) 
   
 The graph shows that there are differences between weekdays and weekends.
 For example, on a weekday the steps start earlier and finish sooner, 
